@@ -1,4 +1,3 @@
-# azure-networking-lab
 # Azure Networking Lab (CLI-Based Infrastructure Project)
 
 ## Overview
@@ -10,10 +9,10 @@ Due to Azure subscription policy restrictions, compute resources (virtual machin
 
 ## Architecture
 
-- Virtual Network: `cloud-engineer-vnet`
-- Address Space: `10.0.0.0/16`
-- Subnet: `web-subnet (10.0.1.0/24)`
-- Region: East US 2
+- **Virtual Network:** cloud-engineer-vnet  
+- **Address Space:** 10.0.0.0/16  
+- **Subnet:** web-subnet (10.0.1.0/24)  
+- **Region:** East US 2  
 
 ---
 
@@ -22,16 +21,19 @@ Due to Azure subscription policy restrictions, compute resources (virtual machin
 ### 1. Virtual Network (VNet)
 - Created a private network in Azure
 - Defined IP address space for future workloads
+- Provides isolated network environment
 
 ### 2. Subnets
 - Created `web-subnet`
 - Segmented network for workload separation
+- Enables structured network design
 
 ### 3. Network Security Group (NSG)
 - Created via Azure CLI
-- Configured inbound rule:
+- Attached to subnet
+- Configured rule:
   - Allow SSH (TCP 22)
-- Attached to subnet for traffic control
+- Controls inbound/outbound traffic
 
 ---
 
@@ -39,8 +41,12 @@ Due to Azure subscription policy restrictions, compute resources (virtual machin
 
 ```bash
 az login
+
 az network vnet list -o table
-az network vnet subnet list -g rg-azure-enterprise-lab -o table
+
+az network vnet subnet list \
+  -g rg-azure-enterprise-lab \
+  -o table
 
 az network nsg create \
   --resource-group rg-azure-enterprise-lab \
@@ -57,3 +63,4 @@ az network nsg rule create \
   --protocol Tcp \
   --destination-port-ranges 22 \
   --source-address-prefixes "*"
+
